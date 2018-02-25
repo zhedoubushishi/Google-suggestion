@@ -1,7 +1,7 @@
 # Google-suggestion  
-  google suggestion by ngram algorithm  
+ ''' google suggestion by ngram algorithm  
   using hadoop mapreduce doing offline training(on docker)  
-  finish front end and back end  
+  finish front end and back end  '''
   
   
   sample result:
