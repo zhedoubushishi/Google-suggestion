@@ -56,7 +56,16 @@ public class NGramLibraryBuilder {
 
 
 	public static class NGramReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+		
+		int threshold;   // if less than threshold, drop the line
 
+		@Override
+		public void setup(Context context) {
+		    Configuration conf = context.getConfiguration();
+		    threshold = conf.getInt("threshold", 10);
+		}
+		
+		
 		//reduce method
 		@Override
 		public void reduce(Text key, Iterable<IntWritable> values, Context context)
@@ -66,8 +75,10 @@ public class NGramLibraryBuilder {
 			for (IntWritable i : values) {
 				sum += i.get();
 			}
-
-			context.write(key, new IntWritable(sum));
+			
+			if (sum >= threshold) {
+				context.write(key, new IntWritable(sum));
+			}
 		}
 	}
 }
