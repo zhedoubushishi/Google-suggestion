@@ -12,23 +12,25 @@ import java.io.IOException;
 public class LanguageModel {
 	public static class Map extends Mapper<LongWritable, Text, Text, Text> {
 
+		/** 
 		int threshold;   // if less than threshold, drop the line
 		@Override
 		public void setup(Context context) {
 			Configuration conf = context.getConfiguration();
 			threshold = conf.getInt("threshold", 10);
 		}
+		*/
 
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 
-			// input value: I like eat apple\t10
+			// input value: I like eat apple\t20
 			String[] line = value.toString().trim().split("\t");
 
 			String[] words = line[0].split("\\s+");   // words: {I, like, eat, apple}
 			int count = Integer.parseInt(line[1]);
 
-			if ((line.length < 2) || (count < threshold)) {
+			if ((line.length < 2)) {
 				return;
 			}
 
